@@ -30,7 +30,7 @@ public class ServerSocketChannelDemo {
             System.out.println("Waiting for connections");
             //这里返回的是 SocketChannel 对象，serversocketchannel本身不创建对象
             SocketChannel socketChannel = serverSocketChannel.accept();
-            if (socketChannel == null) { //没有链接传入
+            if (socketChannel == null) { //没有连接传入
                 System.out.println("null");
                 Thread.sleep(2000);
             } else {

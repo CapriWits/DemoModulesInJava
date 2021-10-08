@@ -1,7 +1,6 @@
 package com.hypocrite30.channel;
 
 import java.net.InetSocketAddress;
-import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
