@@ -31,6 +31,7 @@ public class FileLockDemo {
         //加锁
         FileLock lock = channel.lock(); // 排它锁/独占锁，可以进行读和写
         // FileLock lock = channel.lock(0L, Long.MAX_VALUE, true); // 共享锁，只能读，不能写
+        // FileLock lock = channel.tryLock(); // 非阻塞方法，当文件锁不可用时，返回null
         System.out.println("是否共享锁：" + lock.isShared());
         channel.write(buffer);
         channel.close();

@@ -46,7 +46,6 @@ public class FilesDemo {
             e.printStackTrace();
         }
 
-
         //delete
         Path deletePath = Paths.get("d:\\aa\\001.txt");
         try {
@@ -60,7 +59,7 @@ public class FilesDemo {
          * 文件递归操作
          */
         Path rootPath = Paths.get("d:\\aa"); // 根路径
-        String fileToFind = File.separator + "002.txt"; // 待查找文件名
+        String fileToFind = File.separator + "001.txt"; // 待查找文件名
         System.out.println(fileToFind);
         try {
             Files.walkFileTree(rootPath, new SimpleFileVisitor<Path>() {
