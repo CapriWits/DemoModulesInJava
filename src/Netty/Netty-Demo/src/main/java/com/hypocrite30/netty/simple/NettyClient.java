@@ -8,7 +8,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
-
 /**
  * @Description: Netty 客户端
  * @Author: Hypocrite30
@@ -24,10 +23,10 @@ public class NettyClient {
             Bootstrap bootstrap = new Bootstrap();
             //设置相关参数
             bootstrap.group(group) //设置线程组
-                    .channel(NioSocketChannel.class) // 设置客户端通道的实现类(反射)
+                    .channel(NioSocketChannel.class) // 使用 NioSocketChannel 作为客户端的通道实现，区别于 NioServerSocketChannel
                     .handler(new ChannelInitializer<SocketChannel>() { //SocketChannel 是netty包下的
                         @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
+                        protected void initChannel(SocketChannel socketChannel) {
                             socketChannel.pipeline().addLast(new NettyClientHandler()); //加入自己的处理器
                         }
                     });

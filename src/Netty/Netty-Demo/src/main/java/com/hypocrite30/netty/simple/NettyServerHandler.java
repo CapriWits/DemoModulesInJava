@@ -25,57 +25,52 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      * @param msg 客户端发送的数据 默认Object
      */
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
-        // System.out.println("Current Thread Name = " + Thread.currentThread().getName() + " Channle = " + ctx.channel());
-        // System.out.println("Server ctx = " + ctx);
-        // //Channel 和 Pipeline 的关系，通过断点从 ctx 取出 channel 和 pipeline，两者我中有你，你中有我，相互包含
-        // Channel channel = ctx.channel();
-        // ChannelPipeline channelPipeline = ctx.pipeline(); //本质是一个双向链接, 出栈入栈
-        // //将 msg 转成一个 ByteBuf
-        // //ByteBuf 是 Netty 提供的，不是 NIO 的 ByteBuffer.
-        // ByteBuf byteBuf = (ByteBuf) msg;
-        // System.out.println("Client sending message : " + byteBuf.toString(CharsetUtil.UTF_8));
-        // System.out.println("Client remote address: " + channel.remoteAddress());
+        System.out.println("Current Thread Name = " + Thread.currentThread().getName() + " Channle = " + ctx.channel());
+        System.out.println("Server ctx = " + ctx);
+        //Channel 和 Pipeline 的关系，通过断点从 ctx 取出 channel 和 pipeline，两者我中有你，你中有我，相互包含
+        Channel channel = ctx.channel();
+        ChannelPipeline channelPipeline = ctx.pipeline(); //本质是一个双向链表, 出站入站
+        //将 msg 转成一个 ByteBuf
+        //ByteBuf 是 Netty 提供的，不是 NIO 的 ByteBuffer.
+        ByteBuf byteBuf = (ByteBuf) msg;
+        System.out.println("Client sending message : " + byteBuf.toString(CharsetUtil.UTF_8));
+        System.out.println("Client remote address: " + channel.remoteAddress());
 
 
+        /**
+         * NIOEventLoop 中含有一个 selector 和一个 TaskQueue
+         * TaskQuque 任务队列常见用法：1.用户自定义普通任务 2.用户自定义定时任务
+         *    3.非 Reactor 线程调用 Channel 各种方法「推送系统，找到channel，然后write向用户推送信息，最终会提交到任务队列被消费」
+         */
         //比如这里有一个非常耗时长的业务-> 异步执行 -> 提交该channel 对应的
         //NIOEventLoop 的 TaskQueue 可以处理异步
 
         //解决方案1 用户程序自定义的普通任务
         //ctx获取channel，获取EventLoop，然后交给 TaskQueue 开一个线程去异步执行
-        ctx.channel().eventLoop().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5 * 1000);
-                    ctx.writeAndFlush(Unpooled.copiedBuffer("hello, 客户端 2", CharsetUtil.UTF_8));
-                    System.out.println("channel code=" + ctx.channel().hashCode());
-                } catch (Exception ex) {
-                    System.out.println("发生异常" + ex.getMessage());
-                }
+        /*ctx.channel().eventLoop().execute(() -> {
+            try {
+                Thread.sleep(5 * 1000);
+                ctx.writeAndFlush(Unpooled.copiedBuffer("hello, 客户端 2", CharsetUtil.UTF_8));
+            } catch (Exception e) {
+                System.out.println("发生异常" + e.getMessage());
             }
-        });
+        });*/
 
-        //解决方案2 : 用户自定义定时任务 -》 该任务是提交到 scheduleTaskQueue中
-        ctx.channel().eventLoop().schedule(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    Thread.sleep(5 * 1000);
-                    ctx.writeAndFlush(Unpooled.copiedBuffer("hello, 客户端~(>^ω^<)喵4", CharsetUtil.UTF_8));
-                    System.out.println("channel code=" + ctx.channel().hashCode());
-                } catch (Exception ex) {
-                    System.out.println("发生异常" + ex.getMessage());
-                }
+        //解决方案2 : 用户自定义定时任务 -》 该任务是提交到 scheduleTaskQueue 中
+        /*ctx.channel().eventLoop().schedule(() -> {
+            try {
+                Thread.sleep(5 * 1000);
+                ctx.writeAndFlush(Unpooled.copiedBuffer("hello, 客户端 3", CharsetUtil.UTF_8));
+            } catch (Exception e) {
+                System.out.println("发生异常" + e.getMessage());
             }
-        }, 5, TimeUnit.SECONDS);
-        System.out.println("go on ...");
+        }, 5, TimeUnit.SECONDS);*/
     }
 
     /**
-     * 数据读取完毕
+     * 数据读取完毕，执行操作
      */
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
@@ -91,6 +86,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        cause.printStackTrace();
         ctx.close();
     }
 }
