@@ -19,7 +19,7 @@ public class NettyServer {
          *         2. bossGroup 只是处理连接请求 , 真正的和客户端业务处理，会交给 workerGroup 完成
          *         3. 两个都是无限循环
          *         4. bossGroup 和 workerGroup 含有的子线程(NioEventLoop)的个数
-         *           默认实际 cpu核数 * 2
+         *           workerGroup 默认实际 cpu核数 * 2
          */
         //一般指定 bossGroup 只开一个线程，用于建立连接，或者分发到workerGroup进行网络读写
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);

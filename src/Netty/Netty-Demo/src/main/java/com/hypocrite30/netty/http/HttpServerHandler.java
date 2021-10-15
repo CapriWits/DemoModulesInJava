@@ -43,6 +43,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
             HttpRequest httpRequest = (HttpRequest) httpObject;
             //获取 uri, 过滤指定的资源
             URI uri = new URI(httpRequest.uri());
+            //避免一次请求相应两次
             if ("/favicon.ico".equals(uri.getPath())) {
                 System.out.println("请求了 favicon.ico, 不做响应");
                 return;
