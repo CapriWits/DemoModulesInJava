@@ -11,7 +11,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * 1. SimpleChannelInboundHandler 是 ChannelInboundHandlerAdapter
+ * 1. SimpleChannelInboundHandler 是 ChannelInboundHandlerAdapter 子类
  * 2. HttpObject 客户端和服务器端相互通讯的数据被封装成 HttpObject
  * @Description: Http 服务端自定义 handler
  * @Author: Hypocrite30
