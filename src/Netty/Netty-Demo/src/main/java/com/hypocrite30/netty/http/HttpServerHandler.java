@@ -19,7 +19,6 @@ import java.net.URISyntaxException;
  */
 public class HttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
 
-
     /**
      * 读取客户端数据
      * @param ctx        上下文对象
