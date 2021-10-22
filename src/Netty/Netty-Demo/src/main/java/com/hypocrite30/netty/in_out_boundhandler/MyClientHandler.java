@@ -29,7 +29,7 @@ public class MyClientHandler extends SimpleChannelInboundHandler<Long> {
      * 细节
      * 1. 如果发送数据 是 16个字节 "abcdabcdabcdabcd" ，则服务器会调用两次解码器，调用几次取决于数据的长短
      * 2. 关于 Netty handler 执行顺序：InBoundHandler按照注册「顺序执行」，OutBoundHandler按照注册「倒序执行」
-     *      所以执行顺序是 ClientHandler发信息 -> Client 编码 -> Service 解码 -> ServiceHandler 打印信息
+     *      所以执行顺序是 ClientHandler发信息 -> Client 编码 -> Server 解码 -> ServerHandler 打印信息
      * 3. 该处理器的前一个 handler 是  MyLongToByteEncoder「指的是在初始化handler的注册顺序」
      *      MyLongToByteEncoder 父类  MessageToByteEncoder
      *      MessageToByteEncoder 中的 write 方法如下分析

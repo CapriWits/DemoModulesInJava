@@ -6,7 +6,6 @@ public class Test {
         Thread.sleep(1000);
         System.out.println(System.nanoTime());
 
-
         int a = 10;
         int b = 20;
         int c = 10;
