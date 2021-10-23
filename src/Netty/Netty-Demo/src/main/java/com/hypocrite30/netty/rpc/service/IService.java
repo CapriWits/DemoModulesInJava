@@ -1,4 +1,4 @@
-package com.hypocrite30.netty.rpc.common;
+package com.hypocrite30.netty.rpc.service;
 
 /**
  * @Description: rpc 公共接口

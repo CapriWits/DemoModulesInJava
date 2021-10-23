@@ -1,6 +1,6 @@
 package com.hypocrite30.netty.rpc.provider;
 
-import com.hypocrite30.netty.rpc.common.IService;
+import com.hypocrite30.netty.rpc.service.IService;
 
 /**
  * @Description: 服务提供者 实现类
