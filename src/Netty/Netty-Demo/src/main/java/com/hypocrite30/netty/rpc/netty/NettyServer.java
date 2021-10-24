@@ -51,7 +51,7 @@ public class NettyServer {
                     System.out.println("监听端口 " + port + " 失败");
             });
             System.out.println("服务提供方开始提供服务...");
-            channelFuture.channel().close().sync();
+            channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
