@@ -140,15 +140,15 @@ public class TestHttpClient {
 
         String responseString = EntityUtils.toString(client.execute(bodyParamsPost).getEntity(), "UTF-8");
         /* 下面演示 json 通过 jackson 转换回 java 对象 */
-        String userString = responseString.substring(1, responseString.indexOf("},") + 1);
-        User responseUser = objectMapper.readValue(userString, User.class);
-        System.out.println(responseUser);
-
-        // 构建一个Jackson识别的Java类型映射。
-        JavaType valueType =
-                objectMapper.getTypeFactory().constructParametricType(List.class, User.class);
-        List<User> responseList = objectMapper.readValue(responseString, valueType);
-
-        System.out.println(responseList);
+        // String userString = responseString.substring(1, responseString.indexOf("},") + 1);
+        // User responseUser = objectMapper.readValue(userString, User.class);
+        // System.out.println(responseUser);
+        //
+        // // 构建一个Jackson识别的Java类型映射。
+        // JavaType valueType =
+        //         objectMapper.getTypeFactory().constructParametricType(List.class, User.class);
+        // List<User> responseList = objectMapper.readValue(responseString, valueType);
+        //
+        // System.out.println(responseList);
     }
 }
